@@ -1,5 +1,17 @@
 {
   "dependencies": {
     "cypress": "^13.14.2"
-  }
+  },
+  "name": "scb_cr01",
+  "version": "1.0.0",
+  "main": "cypress.config.js",
+  "devDependencies": {},
+  "scripts": {
+    "cypress:run": "TZ=Asia/Bangkok npx cypress run --record --key c0457743-2584-42fc-9e38-8cd329e4926b"
+  },
+  "private":true,
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
