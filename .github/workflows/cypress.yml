@@ -3,10 +3,7 @@ name: Cypress Tests
 on:
   push:
     branches:
-      - 'main'
-  schedule:
-    - cron: "0 0 * * 0"
-  workflow_dispatch:
+      - 'main' 
 
 jobs:
   cypress-run:
@@ -52,5 +49,5 @@ jobs:
           if [ -f cypress/reports/combined-report.json ]; then
             npx marge cypress/reports/combined-report.json -f report -o cypress/reports
           else
-            echo "Combined report file not found. Skipping report generation."
+            echo "Report file not found. Skipping report generation."
           fi
