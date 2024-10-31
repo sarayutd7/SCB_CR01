@@ -19,24 +19,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cache Cypress Binary
-        uses: actions/cache@v3
-        with:
-          path: /tmp/cypress_cache
-          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-cypress-
-
+      
       - name: Install dependencies
         run: npm install
-
-      - name: Install Cypress Binary
-        run: npx cypress install
-
-      - name: Prepare Cypress Folders
-        run: |
-          mkdir -p cypress/videos cypress/screenshots cypress/reports
-          chmod -R 777 cypress
 
       - name: Run Cypress Tests in Parallel
         env:
@@ -44,18 +29,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CYPRESS_CACHE_FOLDER: /tmp/cypress_cache
         run: |
-          npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }} --reporter mochawesome --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
-
-      - name: Merge Reports
-        if: success() && matrix.container == 1
-        run: |
-          npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
-
-      - name: Generate Report
-        if: success() && matrix.container == 1
-        run: |
-          if [ -f cypress/reports/combined-report.json ]; then
-            npx marge cypress/reports/combined-report.json -f report -o cypress/reports
-          else
-            echo "Report file not found. Skipping report generation."
-          fi
+          npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }}
