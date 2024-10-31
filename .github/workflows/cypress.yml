@@ -3,7 +3,7 @@ name: Cypress Tests
 on:
   push:
     branches:
-      - 'main' 
+      - 'main'
 
 jobs:
   cypress-run:
@@ -19,38 +19,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Clear npm cache
-        run: npm cache clean --force
-
       - name: Install dependencies
         run: npm install # ติดตั้ง dependencies ทั้งหมดจาก package.json
 
-      - name: Install Cypress Latest
+      - name: Install Cypress
         run: npm install cypress@latest
-
-      - name: Set permissions on Cypress cache directory
-        run: sudo chmod -R 777 ~/cypress_cache
-
-      - name: Install Cypress Binary
-        run: npx cypress install # ติดตั้ง Cypress Binary เพิ่มเติมเพื่อให้พร้อมใช้งาน
 
       - name: Prepare Cypress Folders
         run: |
-          mkdir -p cypress/videos cypress/screenshots
-          chmod -R 777 ./cypress
+          mkdir -p cypress/videos cypress/screenshots cypress/reports
+          chmod -R 777 cypress
 
       - name: Run Cypress Tests in Parallel
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_CACHE_FOLDER: /tmp/cypress_cache
         run: |
           npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }} --reporter mochawesome --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
 
       - name: Merge Reports
+        if: success() && matrix.container == 1
         run: |
           npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
 
       - name: Generate Report
+        if: success() && matrix.container == 1
         run: |
           if [ -f cypress/reports/combined-report.json ]; then
             npx marge cypress/reports/combined-report.json -f report -o cypress/reports
