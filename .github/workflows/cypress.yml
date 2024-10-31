@@ -13,3 +13,14 @@ jobs:
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Mochawesome Report
+        run: |
+            mkdir -p public/mochawesome-report
+            cp -r cypress/reports/mochawesome/* public/mochawesome-report || echo "No report found"
+        
+      - name: Deploy Report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./public
