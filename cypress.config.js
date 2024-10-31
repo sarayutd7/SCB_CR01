@@ -1,4 +1,5 @@
 const { defineConfig } = require("cypress");
+const mochawesome = require('cypress-mochawesome-reporter/plugin');
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
@@ -20,6 +21,7 @@ module.exports = defineConfig({
   projectId: "hkh24s",
   e2e: {
     setupNodeEvents(on, config) {
+      mochawesome(on);  // Add the plugin
 
       // กำหนดค่า mochawesome reporter โดยไม่ต้อง require Cypress
       require('cypress-mochawesome-reporter/plugin')(on);
