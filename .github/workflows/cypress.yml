@@ -24,8 +24,18 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Cache Cypress Binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: ${{ runner.os }}-cypress-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+
+      - name: Install Cypress Binary
+        run: npx cypress install
+
       - name: Adjust Cypress Permissions
-        # This step sets execute permissions for Cypress binary to avoid permission errors
         run: chmod +x ./node_modules/.bin/cypress
 
       - name: Run Cypress Tests
