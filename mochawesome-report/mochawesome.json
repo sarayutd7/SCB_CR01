@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2024-10-31T12:42:41.070Z",
-    "end": "2024-10-31T12:44:00.262Z",
-    "duration": 79192,
+    "start": "2024-10-31T12:45:27.406Z",
+    "end": "2024-10-31T12:46:46.531Z",
+    "duration": 79125,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,7 +18,7 @@
   },
   "results": [
     {
-      "uuid": "ebd473a9-8716-45f8-902f-19beb9a16d15",
+      "uuid": "a59d8798-3b77-48a7-b013-ad75a6cdbb5b",
       "title": "",
       "fullFile": "cypress/e2e/VerbatimList.cy.js",
       "file": "cypress/e2e/VerbatimList.cy.js",
@@ -27,7 +27,7 @@
       "tests": [],
       "suites": [
         {
-          "uuid": "0fe66b42-8850-4a6d-8ddd-3b11beee0754",
+          "uuid": "ba58fef3-906e-43fb-b6e9-256aed544a58",
           "title": "Login and navigate to SCB Hottopic",
           "fullFile": "",
           "file": "",
@@ -38,7 +38,7 @@
               "title": "Should navigate to SCB Hottopic page",
               "fullTitle": "Login and navigate to SCB Hottopic Should navigate to SCB Hottopic page",
               "timedOut": null,
-              "duration": 77235,
+              "duration": 77185,
               "state": "passed",
               "speed": "slow",
               "pass": true,
@@ -47,20 +47,20 @@
               "context": null,
               "code": "Step1();\nconst caseID = data.map(item => item.PARENT_CASENUMBER);\nconst searchTerms = data.map(item => item.PARENT_CASENUMBER);\nconst combinedTerms = data.map(item => `${item.PARENT_PROCESS_ADD_INFO_1__C || ''} ${item.PARENT_PROCESS_ADD_INFO_2__C || ''} ${item.PARENT_PROCESS_ADD_INFO_3__C || ''}`.trim());\n//const searchTerms =  data.map(item => item.PARENT_TYPE__C);// Use PARENT_CASENUMBER as terms\n/* Search in Search Case ID */\n//SearchCaseID(caseID, searchTerms); /* PARENT_CASENUMBER */\n//cy.log('Click Click Export Button');\n//clickbt('button.export-file');  \n/** Search PARENT.CASENUMBER to input search caseID and screenshot*/\n//SearchWord('input[placeholder=\"Search keyword by Verbatim\"]', caseID, searchTerms); /* PARENT_CASENUMBER */\n//SearchWord('input[placeholder=\"Search keyword by Verbatim\"]', caseID, searchTerms); /* PARENT_TYPE__C */\nSearchWord('input[placeholder=\"Search keyword by Verbatim\"]', caseID, combinedTerms); /* PARENT_PROCESS_ADD_INFO_1__C */",
               "err": {},
-              "uuid": "72d4259c-8b13-40b6-ae7f-3a7fab2e26bb",
-              "parentUUID": "0fe66b42-8850-4a6d-8ddd-3b11beee0754",
+              "uuid": "3864d2d2-2c8f-424f-b403-5c95755df733",
+              "parentUUID": "ba58fef3-906e-43fb-b6e9-256aed544a58",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "72d4259c-8b13-40b6-ae7f-3a7fab2e26bb"
+            "3864d2d2-2c8f-424f-b403-5c95755df733"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 77235,
+          "duration": 77185,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
