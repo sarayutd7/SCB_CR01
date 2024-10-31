@@ -18,7 +18,7 @@ jobs:
         run: |
           mkdir -p public/mochawesome-report
           if [ -d "cypress/reports/mochawesome" ]; then
-            cp -r cypress/reports/mochawesome/* public/mochawesome-report || echo "No report files to copy"
+            cp -r cypress/reports/mochawesome/* public/cypress/reports || echo "No report files to copy"
           else
             echo "Mochawesome report directory does not exist"
           fi
