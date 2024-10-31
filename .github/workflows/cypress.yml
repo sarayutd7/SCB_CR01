@@ -1,4 +1,4 @@
-name: Cypress Tests with CI/CD and Reporting
+name: Cypress Tests
 
 on:
   push:
@@ -9,43 +9,45 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node16.14.0-chrome100-ff97-edge  # ใช้ Node.js 16 และ Chrome 100
+      image: cypress/browsers:node16.13.0-chrome94-ff93 # Node.js 16, Chrome 94, Firefox 93
 
     strategy:
       fail-fast: false
       matrix:
-        container: [1, 2]  # ใช้ 2 instance เพื่อรันทดสอบแบบขนาน
+        container: [1, 2] # ใช้ 2 container เพื่อรันแบบ parallel
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4  # ดึงโค้ดมาใช้ใน environment
+      - name: Checkout code
+        uses: actions/checkout@v4 # ดึงโค้ดมาใช้ใน environment
 
-      - name: Install Dependencies
-        run: npm ci  # ติดตั้ง dependencies ตาม package-lock.json อย่างสมบูรณ์
+      - name: Install dependencies
+        run: npm ci # ติดตั้ง dependencies ตาม package-lock.json
 
-      - name: Set Permissions for Cypress Cache Directory
-        run: chmod -R 777 /github/home/.cache/Cypress  # ตั้งค่าสิทธิ์ให้ Cypress เขียน cache ได้
+      - name: Set execute permissions for Cypress
+        run: chmod +x ./node_modules/.bin/cypress
 
       - name: Run Cypress Tests in Parallel
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}  # คีย์สำหรับบันทึกผลใน Cypress Cloud
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # คีย์สำหรับเชื่อมต่อกับ GitHub
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }} --reporter mochawesome --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
+          npx cypress run --record --parallel --group "github-action-parallel-${{ matrix.container }}" \
+          --ci-build-id ${{ github.run_id }} --reporter mochawesome \
+          --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
 
       - name: Copy test execution videos and screenshots
         run: |
-          mkdir public
+          mkdir -p public
           cp -r cypress/videos public/videos
           cp -r cypress/screenshots public/screenshots
 
-      - name: Merge Test Reports
+      - name: Merge test reports
         run: npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
 
-      - name: Generate HTML Report
+      - name: Generate HTML report
         run: npx marge cypress/reports/combined-report.json -f report -o public
 
-      - name: Deploy Report Page to GitHub Pages
+      - name: Deploy report page to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
