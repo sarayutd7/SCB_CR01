@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm install # ติดตั้ง dependencies ทั้งหมดจาก package.json
 
+      - name: Set Permissions for Cypress Cache Directory
+        run: sudo chmod -R 777 /github/home/.cache/Cypress
+
       - name: Install Cypress Binary
         run: npx cypress install # ติดตั้ง Cypress Binary เพิ่มเติมเพื่อให้พร้อมใช้งาน
 
