@@ -2,37 +2,14 @@ name: Cypress Tests
 on: [push]
 jobs:
   cypress-run:
-    runs-on: ubuntu-latest 
+    runs-on: ubuntu-latest
     steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-
-        - name: Install Dependencies
-          run: npm ci
-
-        - name: Install Cypress and Verify
-          run: $(npm bin)/cypress verify
-
-        - name: Run Cypress tests
-          run: npm run test:chrome
-          env:
-            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-        - name: Copy Test Execution Videos and Screenshots
-          run: |
-              mkdir -p public/videos public/screenshots
-              cp -r cypress/videos/* public/videos || echo "No videos to copy"
-              cp -r cypress/screenshots/* public/screenshots || echo "No screenshots to copy"
-
-        - name: Merge Test Reports
-          run: npm run combine:report
-
-        - name: Generate HTML Report
-          run: npm run generate:report
-          
-        - name: Deploy Report Page to GitHub Page
-          uses: peaceiris/actions-gh-pages@v3
-          with:
-              github_token: ${{ secrets.GITHUB_TOKEN }}
-              publish_dir: ./public
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Dependencies
+        run: npm ci
+      - name: Cypress Run
+        run: npm run cypress:run
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
