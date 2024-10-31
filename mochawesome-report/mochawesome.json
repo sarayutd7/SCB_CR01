@@ -5,9 +5,9 @@
     "passes": 1,
     "pending": 0,
     "failures": 0,
-    "start": "2024-10-31T12:28:11.440Z",
-    "end": "2024-10-31T12:29:25.566Z",
-    "duration": 74126,
+    "start": "2024-10-31T12:35:08.482Z",
+    "end": "2024-10-31T12:36:27.286Z",
+    "duration": 78804,
     "testsRegistered": 1,
     "passPercent": 100,
     "pendingPercent": 0,
@@ -18,16 +18,16 @@
   },
   "results": [
     {
-      "uuid": "fce8cdec-4908-4df6-ad21-86a5dab4318b",
+      "uuid": "d2af9500-c7e5-45a2-a4e9-29613d18e274",
       "title": "",
-      "fullFile": "cypress/e2e/SCB_Dashboard.cy.js",
-      "file": "cypress/e2e/SCB_Dashboard.cy.js",
+      "fullFile": "cypress/e2e/VerbatimList.cy.js",
+      "file": "cypress/e2e/VerbatimList.cy.js",
       "beforeHooks": [],
       "afterHooks": [],
       "tests": [],
       "suites": [
         {
-          "uuid": "ed45d500-bdc3-4f64-a412-eacb2165d3d5",
+          "uuid": "7c57ae5a-30c7-4f95-90dd-fe56a4a66004",
           "title": "Login and navigate to SCB Hottopic",
           "fullFile": "",
           "file": "",
@@ -38,7 +38,7 @@
               "title": "Should navigate to SCB Hottopic page",
               "fullTitle": "Login and navigate to SCB Hottopic Should navigate to SCB Hottopic page",
               "timedOut": null,
-              "duration": 71142,
+              "duration": 76900,
               "state": "passed",
               "speed": "slow",
               "pass": true,
@@ -47,20 +47,20 @@
               "context": null,
               "code": "Step1();\nconst caseID = data.map(item => item.PARENT_CASENUMBER);\nconst searchTerms = data.map(item => item.PARENT_CASENUMBER);\nconst combinedTerms = data.map(item => `${item.PARENT_PROCESS_ADD_INFO_1__C || ''} ${item.PARENT_PROCESS_ADD_INFO_2__C || ''} ${item.PARENT_PROCESS_ADD_INFO_3__C || ''}`.trim());\n//const searchTerms =  data.map(item => item.PARENT_TYPE__C);// Use PARENT_CASENUMBER as terms\n/* Search in Search Case ID */\n//SearchCaseID(caseID, searchTerms); /* PARENT_CASENUMBER */\n//cy.log('Click Click Export Button');\n//clickbt('button.export-file');  \n/** Search PARENT.CASENUMBER to input search caseID and screenshot*/\n//SearchWord('input[placeholder=\"Search keyword by Verbatim\"]', caseID, searchTerms); /* PARENT_CASENUMBER */\n//SearchWord('input[placeholder=\"Search keyword by Verbatim\"]', caseID, searchTerms); /* PARENT_TYPE__C */\nSearchWord('input[placeholder=\"Search keyword by Verbatim\"]', caseID, combinedTerms); /* PARENT_PROCESS_ADD_INFO_1__C */",
               "err": {},
-              "uuid": "6e5f77f7-c390-453a-ba0b-1c4e31a3543e",
-              "parentUUID": "ed45d500-bdc3-4f64-a412-eacb2165d3d5",
+              "uuid": "2af10bcb-dac6-4cff-9a92-8e34c336953c",
+              "parentUUID": "7c57ae5a-30c7-4f95-90dd-fe56a4a66004",
               "isHook": false,
               "skipped": false
             }
           ],
           "suites": [],
           "passes": [
-            "6e5f77f7-c390-453a-ba0b-1c4e31a3543e"
+            "2af10bcb-dac6-4cff-9a92-8e34c336953c"
           ],
           "failures": [],
           "pending": [],
           "skipped": [],
-          "duration": 71142,
+          "duration": 76900,
           "root": false,
           "rootEmpty": false,
           "_timeout": 2000
@@ -84,7 +84,7 @@
       "options": {
         "quiet": false,
         "reportFilename": "mochawesome",
-        "saveHtml": false,
+        "saveHtml": true,
         "saveJson": true,
         "consoleReporter": "spec",
         "useInlineDiffs": false,
@@ -95,8 +95,8 @@
     "marge": {
       "options": {
         "reportDir": "cypress/reports/mochawesome",
-        "overwrite": false,
-        "html": false,
+        "overwrite": true,
+        "html": true,
         "json": true
       },
       "version": "6.2.0"
