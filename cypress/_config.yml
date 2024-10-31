@@ -1,1 +1,19 @@
+# _config.yml
 
+# Site settings
+title: "Cypress Test Report"
+description: "รายงานการทดสอบ Cypress และ Mochawesome บน GitHub Pages"
+baseurl: "/cypress/reports/" # ใส่ชื่อ repository ที่นี่ ถ้าคุณเผยแพร่ที่ระดับ project
+
+# URL settings
+url: "https://sarayutd7.github.io" # ใส่ username ของคุณที่นี่
+
+# Exclude specific files or directories
+exclude:
+  - node_modules
+  - vendor
+  - Gemfile
+  - Gemfile.lock
+
+# Theme (optional)
+theme: minima # ธีมเรียบง่ายของ Jekyll
