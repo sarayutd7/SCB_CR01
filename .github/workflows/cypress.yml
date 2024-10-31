@@ -34,10 +34,12 @@ jobs:
       - name: Install Cypress Binary
         run: npx cypress install # ติดตั้ง Cypress Binary เพิ่มเติมเพื่อให้พร้อมใช้งาน
 
-      - name: Prepare Cypress Folders
-        run: |
-          mkdir -p cypress/videos cypress/screenshots
-          chmod -R 777 ./cypress
+      - name: Set Permissions for Cypress Cache Directory
+        # Directly set permissions without sudo
+        run: chmod -R 777 /github/home/.cache/Cypress
+
+      - name: Set Execute Permissions for Cypress Binary
+        run: chmod +x ./node_modules/.bin/cypress
 
       - name: Run Cypress Tests in Parallel
         env:
