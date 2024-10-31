@@ -28,7 +28,12 @@ jobs:
           npx mochawesome-merge cypress/reports/mochawesome/*.json > mochawesome.json || echo "No report found"
           npx marge mochawesome.json --reportDir ./public/cypress/reports --inline || echo "No merged report found"
       
-        
+      - name: Copy Videos and Screenshots
+        run: |
+          mkdir -p public/cypress/videos public/cypress/screenshots
+          cp -r cypress/videos/* public/cypress/videos || echo "No videos to copy"
+          cp -r cypress/screenshots/* public/cypress/screenshots || echo "No screenshots to copy"
+  
       - name: Deploy Report Page to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:

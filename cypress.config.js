@@ -8,6 +8,9 @@ module.exports = defineConfig({
     html: true,
     json: true
   },
+  video: true, // เปิดการบันทึกวิดีโอ
+  videosFolder: 'cypress/videos', // โฟลเดอร์สำหรับบันทึกวิดีโอ
+  screenshotsFolder: 'cypress/screenshots', // โฟลเดอร์สำหรับบันทึกภาพหน้าจอ
   projectId: "hkh24s",
   e2e: {
     setupNodeEvents(on, config) {
