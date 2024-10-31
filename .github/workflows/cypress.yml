@@ -34,13 +34,19 @@ jobs:
         run: |
           npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }} --reporter mochawesome --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
 
+      - name: Ensure Reports Directory Exists
+        run: mkdir -p cypress/reports
+
       - name: Merge Reports
         run: |
           npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
+
       - name: Generate Report
         run: |
           if [ -f cypress/reports/combined-report.json ]; then
             npx marge cypress/reports/combined-report.json -f report -o cypress/reports
           else
+            echo "Report file not found. Skipping report generation."
+          fi
             echo "Report file not found. Skipping report generation."
           fi
