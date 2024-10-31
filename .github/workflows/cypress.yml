@@ -10,10 +10,8 @@ jobs:
         - name: Install Dependencies
           run: npm ci
 
-        - name: Install cypress and verify
-          run: |
-              npm ci
-              $(npm bin)/cypress verify
+        - name: Install Cypress and Verify
+          run: $(npm bin)/cypress verify
 
         - name: Run Cypress tests
           run: npm run test:chrome
@@ -21,19 +19,19 @@ jobs:
             CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: Copy test execution videos and screenshots
+        - name: Copy Test Execution Videos and Screenshots
           run: |
-              mkdir public
-              cp -r cypress/videos public/videos
-              cp -r cypress/screenshots public/screenshots
+              mkdir -p public/videos public/screenshots
+              cp -r cypress/videos/* public/videos || echo "No videos to copy"
+              cp -r cypress/screenshots/* public/screenshots || echo "No screenshots to copy"
 
-        - name: Merge test reports
+        - name: Merge Test Reports
           run: npm run combine:report
 
-        - name: Generate HTML report
+        - name: Generate HTML Report
           run: npm run generate:report
           
-        - name: Deploy report page to GitHub Page
+        - name: Deploy Report Page to GitHub Page
           uses: peaceiris/actions-gh-pages@v3
           with:
               github_token: ${{ secrets.GITHUB_TOKEN }}
