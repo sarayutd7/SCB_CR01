@@ -9,7 +9,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node16.13.0-chrome94-ff93  # ใช้ Node.js 16 พร้อมเบราว์เซอร์ที่รองรับ
+      image: cypress/browsers:node16.14.0-chrome100-ff97-edge  # ใช้ Node.js 16 และ Chrome 100
 
     strategy:
       fail-fast: false
