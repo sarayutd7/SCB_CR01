@@ -1,40 +1,45 @@
-name: Cypress Tests
+# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-action
 
+
+name: Generate Cypress Report
 on:
   push:
     branches:
-      - main
-  pull_request:
-    branches:
-      - main
+      - 'master'
 
 jobs:
-  cypress-run:
-    runs-on: ubuntu-latest
-
+  cypress-test:
+    name: Run on Chrome 83
+    runs-on: ubuntu-18.04
+    container: cypress/browsers:node12.18.0-chrome83-ff77
     steps:
-      # Step 1: Checkout the code
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
-      # Step 2: Set up Node.js (specify your Node version if needed)
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-
-      # Step 3: Install dependencies
-      - name: Install dependencies
-        run: npm install
-
-      # Step 4: Clear Cypress cache (if needed)
-      - name: Clear Cypress cache
-        run: rm -rf ~/.cache/Cypress
-
-      # Step 5: Run Cypress tests
-      - name: Run Cypress in parallel with mochawesome reporter
-        env:
-          # Add Cypress record key here
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+      - name: Install cypress and verify
         run: |
-          npm run cypress:run --record --parallel --group "github-action-parallel-1" --ci-build-id 11605682783 --reporter mochawesome --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
+          npm ci
+          $(npm bin)/cypress verify
+
+      - name: Run Cypress tests
+        run: npm run cypress:run --record
+        continue-on-error: true
+
+      - name: Copy test execution videos and screenshots
+        run: |
+          mkdir public
+          cp -r cypress/videos public/videos
+          cp -r cypress/screenshots public/screenshots
+
+      - name: Merge test reports
+        run: npm run combine:report
+
+      - name: Generate HTML report
+        run: npm run generate:report
+      
+      - name: Deploy report page to GitHub Page
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          
