@@ -39,14 +39,17 @@ jobs:
 
       - name: Merge Reports
         run: |
-          npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
+          if ls cypress/reports/*.json 1> /dev/null 2>&1; then
+            npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
+          else
+            echo "No report files found to merge. Skipping merge step."
+            exit 0
+          fi
 
       - name: Generate Report
         run: |
           if [ -f cypress/reports/combined-report.json ]; then
             npx marge cypress/reports/combined-report.json -f report -o cypress/reports
           else
-            echo "Report file not found. Skipping report generation."
-          fi
-            echo "Report file not found. Skipping report generation."
+            echo "Combined report file not found. Skipping report generation."
           fi
