@@ -1,33 +1,32 @@
 name: Cypress Tests
 
-# กำหนดให้ workflow นี้รันเมื่อมีการ push โค้ดไปที่ branch main
 on:
-    push:
-      branches:
-        - main 
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-    # ตั้งค่าให้การทดสอบรันแบบขนาน โดยใช้กลยุทธ์ matrix
-    # ใช้ 2 instances ทำให้การรันเร็วขึ้น
-    strategy:
-      fail-fast: false # กำหนดให้ไม่หยุดเมื่อเกิดข้อผิดพลาด (เพื่อรันงานอื่นให้ครบ)
-      matrix:
-        container: [1, 2] # ใช้ 2 instance รันพร้อมกัน
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4 # ดึงโค้ดจาก repository มายัง environment
+      - name: Check out repository
+        uses: actions/checkout@v2
 
-      - name: Install Dependencies
-        run: npm ci # ติดตั้ง dependencies อย่างครบถ้วน
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
 
-       
+      - name: Install dependencies
+        run: npm install
+
       - name: Run Cypress Tests in Parallel
         env:
-          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # ใช้สำหรับบันทึกผลใน Cypress Cloud
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ใช้สำหรับเชื่อมต่อกับ GitHub
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }}
-      
+          npm run cypress:run --record --parallel --group "github-action-parallel-1" --ci-build-id ${{ github.run_id }}
