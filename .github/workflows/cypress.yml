@@ -13,17 +13,8 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16'
-
       - name: Install dependencies
         run: npm install
-
-      - name: Adjust Cypress Permissions
-        # Set execute permissions for Cypress binary to avoid permission errors
-        run: chmod +x ./node_modules/.bin/cypress
 
       - name: Run Cypress Tests
         env:
