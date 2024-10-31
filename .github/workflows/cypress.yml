@@ -28,3 +28,11 @@ jobs:
         with:
             github_token: ${{ secrets.GH_TOKEN }}
             publish_dir: ./public
+
+      - name: Auto Merge Pull Request
+        if: github.event_name == 'pull_request'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          gh pr merge $PR_NUMBER --merge --admin

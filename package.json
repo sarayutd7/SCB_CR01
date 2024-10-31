@@ -169,7 +169,7 @@
   "yauzl": "^2.10.0"
   },
   "scripts": {
-  "cypress:run": "npx cypress run --record --key c0457743-2584-42fc-9e38-8cd329e4926b --reporter mochawesome --reporter-options reportDir=cypress/reports/mochawesome,overwrite=false,html=false,json=true"
+  "cypress:run": "npx cypress run --record --key c0457743-2584-42fc-9e38-8cd329e4926b --reporter mochawesome --reporter-options reportDir=cypress/reports/mochawesome,overwrite=true,html=true,json=true"
   },
   "private": true,
   "defaultCommandTimeout": 5000,
