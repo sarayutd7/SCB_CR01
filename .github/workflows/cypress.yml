@@ -19,11 +19,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Cache Cypress Binary
+        uses: actions/cache@v3
+        with:
+          path: /tmp/cypress_cache
+          key: ${{ runner.os }}-cypress-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-cypress-
+
       - name: Install dependencies
         run: npm install # ติดตั้ง dependencies ทั้งหมดจาก package.json
 
-      - name: Install Cypress
-        run: npm install cypress@latest
+      - name: Install Cypress Binary
+        run: npx cypress install
 
       - name: Prepare Cypress Folders
         run: |
