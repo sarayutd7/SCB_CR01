@@ -9,7 +9,9 @@ on:
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
-
+    container:
+      image: cypress/browsers:node12.18.0-chrome83-ff77
+      
     # ตั้งค่าให้การทดสอบรันแบบขนาน โดยใช้กลยุทธ์ matrix
     # ใช้ 2 instances ทำให้การรันเร็วขึ้น
     strategy:
