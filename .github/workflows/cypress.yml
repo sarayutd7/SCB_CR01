@@ -29,5 +29,5 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }} # ใช้สำหรับบันทึกผลใน Cypress Cloud
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ใช้สำหรับเชื่อมต่อกับ GitHub
         run: |
-          npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }}"
- 
+          npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }}
+      
