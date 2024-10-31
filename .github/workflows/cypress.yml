@@ -1,5 +1,5 @@
 name: Cypress Tests
-on: 
+on:
   push:
     branches:
       - main
@@ -26,11 +26,15 @@ jobs:
       #       echo "Mochawesome report directory does not exist"
       #     fi
 
+      
       - name: Merge Mochawesome Reports
         run: |
-          npx mochawesome-merge cypress/reports/mochawesome/*.json > mochawesome.json || echo "No report found"
+          npx mochawesome-merge "cypress/reports/mochawesome/*.json" > mochawesome.json || echo "No report found"
           npx marge mochawesome.json --reportDir ./public/cypress/reports --inline || echo "No merged report found"
-      
+          
+      - name: Check for Mochawesome JSON Reports
+        run: ls -l cypress/reports/mochawesome || echo "No JSON reports found"
+
       - name: Copy Videos and Screenshots
         run: |
           mkdir -p public/cypress/videos public/cypress/screenshots
