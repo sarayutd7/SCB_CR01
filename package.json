@@ -170,8 +170,16 @@
     "yauzl": "^2.10.0"
   },
   "scripts": {
-    "cypress:run": "TZ=Asia/Bangkok npx cypress run --record --key c0457743-2584-42fc-9e38-8cd329e4926b" 
+    "cypress:run": "cypress run --record --key c0457743-2584-42fc-9e38-8cd329e4926b",
+    "combine:report": "mochawesome-merge ./mochawesome-report/*.json -o index.json",
+    "generate:report": "marge index.json --reportDir public --assetsDir public/assets --reportPageTitle index.html"
   },
+  "devDependencies": {
+        "cypress": "4.9.0",
+        "mochawesome": "6.1.1",
+        "mochawesome-merge": "4.1.0",
+        "mochawesome-report-generator": "5.1.0"
+    },
   "private": true,
   "defaultCommandTimeout": 5000,
   "description": ""
