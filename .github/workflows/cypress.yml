@@ -28,7 +28,7 @@ jobs:
             ${{ runner.os }}-cypress-
 
       - name: Install dependencies
-        run: npm install # ติดตั้ง dependencies ทั้งหมดจาก package.json
+        run: npm install
 
       - name: Install Cypress Binary
         run: npx cypress install
