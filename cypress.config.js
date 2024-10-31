@@ -1,5 +1,4 @@
 const { defineConfig } = require("cypress");
-const dotenv = require('cypress-dotenv');
 
 module.exports = defineConfig({
   reporter: 'cypress-mochawesome-reporter',
@@ -21,8 +20,6 @@ module.exports = defineConfig({
   projectId: "hkh24s",
   e2e: {
     setupNodeEvents(on, config) {
-      // Load environment variables from .env file
-      config = dotenv(config);
 
       // กำหนดค่า mochawesome reporter โดยไม่ต้อง require Cypress
       require('cypress-mochawesome-reporter/plugin')(on);

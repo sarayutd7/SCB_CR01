@@ -1,15 +1,32 @@
 name: Cypress Tests
-on: [push]
+
+on:
+  push:
+    branches:
+      - main 
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Install Dependencies
-        run: npm ci
-      - name: Cypress Run
-        run: npm run cypress:run
+      - name: Check out repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Adjust Cypress Permissions
+        # Set execute permissions for Cypress binary to avoid permission errors
+        run: chmod +x ./node_modules/.bin/cypress
+
+      - name: Run Cypress Tests
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          npm run cypress:run --record --parallel --group "github-action-parallel-1" --ci-build-id ${{ github.run_id }}
