@@ -7,6 +7,9 @@ jobs:
         - name: Checkout
           uses: actions/checkout@v4
 
+        - name: Install Dependencies
+          run: npm ci
+
         - name: Install cypress and verify
           run: |
               npm ci
@@ -14,7 +17,9 @@ jobs:
 
         - name: Run Cypress tests
           run: npm run test:chrome
-          continue-on-error: true
+          env:
+            CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
         - name: Copy test execution videos and screenshots
           run: |
