@@ -14,14 +14,20 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Mochawesome Report
+      # - name: Mochawesome Report
+      #   run: |
+      #     mkdir -p public/mochawesome-report
+      #     if [ -d "cypress/reports/mochawesome" ]; then
+      #       cp -r cypress/reports/mochawesome/* public/cypress/reports || echo "No report files to copy"
+      #     else
+      #       echo "Mochawesome report directory does not exist"
+      #     fi
+
+      - name: Merge Mochawesome Reports
         run: |
-          mkdir -p public/mochawesome-report
-          if [ -d "cypress/reports/mochawesome" ]; then
-            cp -r cypress/reports/mochawesome/* public/cypress/reports || echo "No report files to copy"
-          else
-            echo "Mochawesome report directory does not exist"
-          fi
+          npx mochawesome-merge cypress/reports/mochawesome/*.json > mochawesome.json || echo "No report found"
+          npx marge mochawesome.json --reportDir ./public/cypress/reports --inline || echo "No merged report found"
+      
         
       - name: Deploy Report Page to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
