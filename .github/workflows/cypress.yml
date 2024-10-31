@@ -24,6 +24,10 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Adjust Cypress Permissions
+        # This step sets execute permissions for Cypress binary to avoid permission errors
+        run: chmod +x ./node_modules/.bin/cypress
+
       - name: Run Cypress Tests
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
