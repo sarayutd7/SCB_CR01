@@ -3,7 +3,7 @@
 # Site settings
 title: "Cypress Test Report"
 description: "รายงานการทดสอบ Cypress และ Mochawesome บน GitHub Pages"
-baseurl: "/cypress/reports/" # ใส่ชื่อ repository ที่นี่ ถ้าคุณเผยแพร่ที่ระดับ project
+baseurl: "/SCB_CR01" # เปลี่ยนให้ตรงกับชื่อ repository ของคุณ
 
 # URL settings
 url: "https://sarayutd7.github.io" # ใส่ username ของคุณที่นี่
@@ -17,3 +17,6 @@ exclude:
 
 # Theme (optional)
 theme: minima # ธีมเรียบง่ายของ Jekyll
+
+# Markdown settings
+markdown: kramdown
