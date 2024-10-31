@@ -33,23 +33,22 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # ใช้สำหรับเชื่อมต่อกับ GitHub
         run: |
           npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }} --reporter mochawesome --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
-
-      - name: Ensure Reports Directory Exists
-        run: mkdir -p cypress/reports
-
-      - name: Merge Reports
+          continue-on-error: true
+          
+      - name: Copy test execution videos and screenshots
         run: |
-          if ls cypress/reports/*.json 1> /dev/null 2>&1; then
-            npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
-          else
-            echo "No report files found to merge. Skipping merge step."
-            exit 0
-          fi
+          mkdir public
+          cp -r cypress/videos public/videos
+          cp -r cypress/screenshots public/screenshots
 
-      - name: Generate Report
-        run: |
-          if [ -f cypress/reports/combined-report.json ]; then
-            npx marge cypress/reports/combined-report.json -f report -o cypress/reports
-          else
-            echo "Combined report file not found. Skipping report generation."
-          fi
+      - name: Merge test reports
+        run: npm run combine:report
+
+      - name: Generate HTML report
+        run: npm run generate:report
+      
+      - name: Deploy report page to GitHub Page
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
