@@ -52,5 +52,5 @@ jobs:
           if [ -f cypress/reports/combined-report.json ]; then
             npx marge cypress/reports/combined-report.json -f report -o cypress/reports
           else
-            echo "Report file not found. Skipping report generation."
+            echo "Combined report file not found. Skipping report generation."
           fi
