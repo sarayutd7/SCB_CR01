@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - 'main'
-  schedule:
-    - cron: "0 0 * * 0"
-  workflow_dispatch:
 
 jobs:
   cypress-run:
@@ -26,7 +23,7 @@ jobs:
         run: npm cache clean --force
 
       - name: Install dependencies
-        run: npm ci # ติดตั้ง dependencies ทั้งหมดจาก package.json
+        run: npm install # ติดตั้ง dependencies ทั้งหมดจาก package.json
 
       - name: Run Cypress Tests in Parallel
         env:
@@ -35,14 +32,3 @@ jobs:
         run: |
           npm run cypress:run --record --parallel --group "github-action-parallel-${{ matrix.container }}" --ci-build-id ${{ github.run_id }} --reporter mochawesome --reporter-options "reportDir=cypress/reports,overwrite=true,html=true,json=true"
 
-      - name: Merge Reports
-        run: |
-          npx mochawesome-merge cypress/reports/*.json > cypress/reports/combined-report.json
-
-      - name: Generate Report
-        run: |
-          if [ -f cypress/reports/combined-report.json ]; then
-            npx marge cypress/reports/combined-report.json -f report -o cypress/reports
-          else
-            echo "Report file not found. Skipping report generation."
-          fi
