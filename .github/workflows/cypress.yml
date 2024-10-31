@@ -10,7 +10,7 @@ jobs:
   cypress-run:
     runs-on: ubuntu-latest
     container:
-      image: cypress/browsers:node12.18.0-chrome83-ff77
+      image: cypress/browsers:node16.13.0-chrome94-ff93 # Image นี้ใช้ Node.js 16 พร้อม Chrome และ Firefox
       
     # ตั้งค่าให้การทดสอบรันแบบขนาน โดยใช้กลยุทธ์ matrix
     # ใช้ 2 instances ทำให้การรันเร็วขึ้น
