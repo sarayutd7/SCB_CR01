@@ -35,8 +35,9 @@ jobs:
       - name: Install Cypress Binary
         run: npx cypress install
 
-      - name: Adjust Cypress Permissions
-        run: chmod +x ./node_modules/.bin/cypress
+      - name: Adjust Permissions for Cypress Binary
+        # Set execute permissions to prevent 'Permission denied' error
+        run: chmod +x ~/.cache/Cypress/*/Cypress/Cypress
 
       - name: Run Cypress Tests
         env:
