@@ -1,1 +1,1 @@
-test
+npx cypress run --record --key 
